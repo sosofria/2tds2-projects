@@ -50,6 +50,7 @@ function storePost(title, category, resume, author, date){
     posts.push(post);
 }
 function showPosts(){
+    document.getElementById("list").classList.remove("hidden");
     let showContent = "";
 
     posts.forEach((post, index) => {
@@ -63,7 +64,7 @@ function showPosts(){
 
 
             <button onclick="editPost(${index})">editar</button>
-            <button onclick="deletePost(${index})">excluir</button>
+            <button onclick="removePost(${index})">excluir</button>
             </div>
         `;
     });
@@ -81,4 +82,13 @@ function editPost(index){
     document.getElementById("date").value = post.date;
 
     postIndex = index;
+}
+
+function removePost(index){
+    posts.splice(index, 1);
+    showPosts();
+
+    if(posts.length == 0){
+        document.getElementById("list").classList.add("hidden");
+    }
 }
