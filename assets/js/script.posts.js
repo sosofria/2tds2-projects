@@ -1,3 +1,6 @@
+const posts = [];
+let postIndex = -1;
+
 function savePost(){
     const title = document.getElementById("title").value;
     const category = document.getElementById("category").value;
@@ -5,9 +8,26 @@ function savePost(){
     const author = document.getElementById("author").value;
     const date = document.getElementById("date").value;
 
-    console.log(title,category,resume,author,date)
-
-    cleanFields()
+    if(title && category && resume && author && date){
+          if(postIndex == -1){
+        storePost(title,category,resume,author,date);
+        cleanFields();
+        showPosts();
+          }else{
+            posts[postIndex] = {
+                title,
+                category,
+                resume,
+                author,
+                date,
+            };
+          }
+          cleanFields();
+          showPosts();
+          postIndex = -1;
+    }else{
+        alert("preencha todos os campos")
+    }
 }
 
 function cleanFields(){
@@ -16,4 +36,49 @@ function cleanFields(){
     document.getElementById("resume").value = "";
     document.getElementById("author").value = "";
     document.getElementById("date").value = "";
+}
+
+function storePost(title, category, resume, author, date){
+    const post ={
+        title,
+        category,
+        resume,
+        author,
+        date,
+    };
+
+    posts.push(post);
+}
+function showPosts(){
+    let showContent = "";
+
+    posts.forEach((post, index) => {
+        showContent += `
+          <div class="itemPost">
+            <h2>${post.title}</h2>
+            <p><strong>categoria: </strong>${post.category}</p>
+            <p><strong>resumo: </strong>${post.resume}</p>
+            <p><strong>autor: </strong>${post.author}</p>
+            <p><strong>data de publicação: </strong>${post.date}</p>
+
+
+            <button onclick="editPost(${index})">editar</button>
+            <button onclick="deletePost(${index})">excluir</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("list").innerHTML = showContent;
+}
+
+function editPost(index){
+    const post = posts[index];
+
+    document.getElementById("title").value = post.title;
+    document.getElementById("category").value = post.category;
+    document.getElementById("resume").value = post.resume;
+    document.getElementById("author").value = post.author;
+    document.getElementById("date").value = post.date;
+
+    postIndex = index;
 }
