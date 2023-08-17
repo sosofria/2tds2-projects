@@ -2,7 +2,7 @@ class Category{ //possui varios produtos
     constructor(id, name){
         this.id = id;
         this.name = name;
-        this.projects = []; //array
+        this.products = []; //array
     }
 }
 
@@ -34,9 +34,17 @@ class ProductService{
         this.products = [];
         this.nextCategoryId = 0;
     }
+
+    addProduct(name, price, category){
+        const id = this.nextCategoryId++;
+        const product = new Product(id, name, price, category);
+        category.products.push(product);
+        this.products.push(product);
+    }
 }
 
 const categoryList = new CategoryService();
+const productList = new ProductService();
 
 function createCategory(){
     const categoryName = "doce";
@@ -44,4 +52,14 @@ function createCategory(){
     categoryList.addCategory(categoryName);
 
     console.log(categoryList.categories);
+}
+
+function createProduct(){
+    const productName = "bolo";
+    const productPrice = 20;
+    const productCategory = categoryList.categories[0];
+    
+    productList.addProduct(productName, productPrice, productCategory);
+
+    console.log(productList.products);
 }
