@@ -19,7 +19,7 @@ class Product{
 class CategoryService{
     constructor(){ //nao chama nenhum parametro
         this.categories = [];
-        this.nextCategoryId = 0;
+        this.nextCategoryId = 1;
     }
 
     addCategory(name){
@@ -47,8 +47,8 @@ const categoryList = new CategoryService();
 const productList = new ProductService();
 
 function createCategory(){
-    const categoryName = "doce";
-
+    const categoryName = document.getElementById("categoryName").value;
+    //console.log(categoryName);
     categoryList.addCategory(categoryName);
 
     console.log(categoryList.categories);
@@ -61,5 +61,12 @@ function createProduct(){
     
     productList.addProduct(productName, productPrice, productCategory);
 
-    console.log(productList.products);
+    //console.log(productList.products);
+}
+
+function clearFormFields(){
+    document.getElementById("categoryName").value = "";
+    document.getElementById("productName").value = "";
+    document.getElementById("productPrice").value = "";
+    document.getElementById("productCategory").value = "";
 }
